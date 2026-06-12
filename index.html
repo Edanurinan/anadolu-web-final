@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ANADOLU • Tarihin Sıfır Noktası</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+
+    <section class="hero-section">
+        <div class="hero-bg"></div>
+        <div class="hero-content">
+            <span class="hero-subtitle">ANADOLU'NUN KAYIP ŞEHİRLERİ</span>
+            <h1 class="hero-title">Zamanın<br>Ötesinde</h1>
+            <p class="hero-desc">İnsanlığın kaderini değiştiren topraklar, modern bir dijital arşivle yeniden hayat buluyor.</p>
+            <div class="hero-buttons">
+                <button class="scroll-discover-btn" onclick="document.getElementById('explore').scrollIntoView({behavior: 'smooth'})">Keşfetmeye Başla ↓</button>
+                <button class="admin-toggle-btn" onclick="panelToggle()">Kaşif Modu (Düzenle)</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="features-section">
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">👁️</div>
+                <h3>Zaman Tüneli Gezisi</h3>
+                <p>Çağlar arası filtreleri kullanarak Neolitik dönemden Orta Çağ'a uzanan derin bir arkeolojik yolculuğa çıkın.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔍</div>
+                <h3>Anlık Arşiv Arama</h3>
+                <p>Gelişmiş arama çubuğu ile kayıp şehirlerin adlarını, bulundukları konumları veya kısa özetlerini anında sorgulayın.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📖</div>
+                <h3>Detaylı Tarihçe</h3>
+                <p>"Yolculuğa Başla" butonlarına tıklayarak kentlerin derin akademik bilgilerine, mitlerine ve gizemlerine kapı aralayın.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📜</div>
+                <h3>Kişisel Arkeolog Notları</h3>
+                <p>Kaşif Modu'nu aktif ederek kendi keşiflerinizi kalıcı olarak arşive ekleyin, mevcut kayıtları düzenleyin veya silin.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="explore" class="explore-section">
+        <div class="section-header">
+            <h2>Medeniyet Atlası</h2>
+            
+            <div class="search-box">
+                <input type="text" id="arama-input" placeholder="Antik kent veya şehir ara...">
+            </div>
+
+            <div class="filter-buttons">
+                <button class="btn active" data-filter="hepsi">Tüm Çağlar</button>
+                <button class="btn" data-filter="neolitik">Neolitik</button>
+                <button class="btn" data-filter="bronz">Bronz Çağı</button>
+                <button class="btn" data-filter="klasik">Klasik Roma</button>
+                <button class="btn" data-filter="ortacag">Orta Çağ</button>
+            </div>
+        </div>
+
+        <div id="kentler-container" class="cinematic-grid"></div>
+    </section>
+
+    <section id="arkeolog-panel" class="admin-panel closed">
+        <div class="panel-header">
+            <h2 id="form-baslik">Arşive Yeni Keşif Ekle</h2>
+            <p>Anadolu'nun kayıp kalıntılarını dijital hafızaya kaydedin.</p>
+        </div>
+        
+        <form id="kent-formu" class="premium-form">
+            <input type="hidden" id="kent-id">
+            
+            <div class="form-row">
+                <input type="text" id="kent-isim" placeholder="Antik Kent Adı (Örn: Truva)" required>
+                <input type="text" id="kent-sehir" placeholder="Bulunduğu Şehir (Örn: Çanakkale)" required>
+            </div>
+            
+            <div class="form-row">
+                <input type="text" id="kent-tarih" placeholder="Tarih / Dönem (Örn: M.Ö. 3000)" required>
+                <select id="kent-donem" required>
+                    <option value="" disabled selected>Çağ Seçiniz</option>
+                    <option value="neolitik">Neolitik</option>
+                    <option value="bronz">Bronz Çağı</option>
+                    <option value="klasik">Klasik Roma</option>
+                    <option value="ortacag">Orta Çağ</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <input type="text" id="kent-aciklama" placeholder="Kısa Özet Açıklama (Kartta görünecek kısım)" required>
+            </div>
+
+            <div class="form-group">
+                <textarea id="kent-detay" placeholder="Detaylı Arkeolojik Tarihçe (Yolculuğa Başla butonuna basınca modalda çıkacak uzun yazı)" rows="5" required></textarea>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" id="kaydet-btn" class="form-submit-btn">Kayıtları Ağaçlandır</button>
+                <button type="button" id="iptal-btn" class="form-cancel-btn" onclick="formSifirla()" style="display: none;">Değişiklikleri İtal Et</button>
+            </div>
+        </form>
+    </section>
+
+    <div id="detay-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="modalKapat()">&times;</span>
+            <img id="modal-resim" src="" alt="Antik Kent">
+            <div class="modal-body">
+                <h2 id="modal-baslik"></h2>
+                <p id="modal-sehir-tarih"></p>
+                <p id="modal-uzun-yazi"></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/data.js"></script>
+    <script src="/js/main.js"></script>
+</body>
+</html>
